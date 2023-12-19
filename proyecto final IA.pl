@@ -37,7 +37,8 @@ consulta_REAL_sin_Duplicados(RESULTADO,PRODUCTO,LINEA,PARTE_CUERPO,OBJETIVO,ESTA
     setof(PRODUCTO,producto(PRODUCTO,LINEA,PARTE_CUERPO,OBJETIVO,ESTADO_PARTE_CUERPO,MOMENTO_APLICAR,GENERO,PRECIOMAXIMO),RESULTADO).
 
 consultaConDuplicados(RESULTADO) :-
-    findall(P, producto(P, _, pelo, nutricion, liso_graso, _, _, 1000000000), RESULTADO).
+    findall(P, producto(P, _, pelo, nutricion, liso_graso, _, _, 1000000000), Resultados),
+    atomic_list_concat(Resultados, ',', RESULTADO).
 
 consultaSinDuplicados(RESULTADO) :-
     setof(P, producto(P, _, pelo, nutricion, liso_graso, _, _, 1000000000), RESULTADO).
