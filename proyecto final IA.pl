@@ -16,14 +16,24 @@ recomendadoEn(PRODUCTO,PARTE_CUERPO,ESTADO_PARTE_CUERPO) :-
 totalProductos(RESULTADO, PRODUCTO_MALO, PRODUCTO) :- 
     ( PRODUCTO \= PRODUCTO_MALO -> RESULTADO = PRODUCTO ; false).
 
-precioProducto(PRODUCTO,PRECIOMAXIMO) :- precio(PRODUCTO,X), X @=< PRECIOMAXIMO.
-    
-producto(PRODUCTO,LINEA,PARTE_CUERPO,OBJETIVO,ESTADO_PARTE_CUERPO,MOMENTO_APLICAR,GENERO,PRECIOMAXIMO) :- 
-    sirvePara(PRODUCTO,OBJETIVO), 
-    cuandoUsarlo(PRODUCTO,MOMENTO_APLICAR),
-    recomendadoPara(PRODUCTO,LINEA,PARTE_CUERPO,ESTADO_PARTE_CUERPO,GENERO),
-    precioProducto(PRODUCTO,PRECIOMAXIMO).
+precioProducto(PRODUCTO,PRECIOMAXIMO) :- 
+    precio(PRODUCTO,X), X @=< PRECIOMAXIMO.
+     
 
+
+producto(PRODUCTO,LINEA,PARTE_CUERPO,OBJETIVO,ESTADO_PARTE_CUERPO,MOMENTO_APLICAR,GENERO,PRECIOMAXIMO):- 
+    sirvePara(PRODUCTO,OBJETIVO), 
+    %(write("sirvePara: "), write(PRODUCTO),nl),
+    cuandoUsarlo(PRODUCTO,MOMENTO_APLICAR),
+    %(write("cuandoUsarlo: "), write(true),nl),
+    recomendadoPara(PRODUCTO,LINEA,PARTE_CUERPO,ESTADO_PARTE_CUERPO,GENERO),
+    %(write("recomendadoPara: "), write(PARTE_CUERPO),write(" "),write(ESTADO_PARTE_CUERPO),write(" "),write(GENERO),nl),
+    precioProducto(PRODUCTO,PRECIOMAXIMO).
+	%(write("precioProducto: "), write(true),nl).
+
+consulta_REAL(RESULTADO,PRODUCTO,LINEA,PARTE_CUERPO,OBJETIVO,ESTADO_PARTE_CUERPO,MOMENTO_APLICAR,GENERO,PRECIOMAXIMO):-
+    setof(PRODUCTO,producto(PRODUCTO,LINEA,PARTE_CUERPO,OBJETIVO,ESTADO_PARTE_CUERPO,MOMENTO_APLICAR,GENERO,PRECIOMAXIMO),RESULTADO).
+    
 consulta(RESULTADO):-setof(P,producto(P,_,pelo,nutricion,liso_graso,_,_,1000000000),RESULTADO).
 
 pertenece(shampooekosmurumuru,ekos_murumuru). 
